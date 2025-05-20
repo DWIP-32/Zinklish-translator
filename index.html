@@ -1,0 +1,80 @@
+<!<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zinklish ChatBuddy</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background: #f2f2f2;
+    }
+    textarea {
+      width: 80%;
+      height: 100px;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 5px;
+      cursor: pointer;
+    }
+    #output {
+      background: #fff;
+      padding: 10px;
+      border: 1px solid #ccc;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Zinklish ChatBuddy</h1>
+  <p>Type your message below:</p>  <textarea id="inputText" placeholder="Enter English or Zinklish text here..."></textarea><br><button onclick="translateToZinklish()">English to Zinklish</button> <button onclick="translateToEnglish()">Zinklish to English</button>
+
+  <h2>Output:</h2>
+  <div id="output"></div>  <script>
+    function reverseWord(word) {
+      return word.split('').reverse().join('');
+    }
+
+    function toZinklish(text) {
+      const shortcuts = { yes: 'YZ', no: 'NZ', okay: 'OZ', bye: 'BZ', please: 'PZ', thanks: 'TZ' };
+      return text
+        .split(' ')
+        .map(word => {
+          const lower = word.toLowerCase();
+          if (shortcuts[lower]) return shortcuts[lower];
+          return reverseWord(word) + 'zo';
+        })
+        .join(' ');
+    }
+
+    function fromZinklish(text) {
+      const reverseShortcuts = { YZ: 'yes', NZ: 'no', OZ: 'okay', BZ: 'bye', PZ: 'please', TZ: 'thanks' };
+      return text
+        .split(' ')
+        .map(word => {
+          if (reverseShortcuts[word]) return reverseShortcuts[word];
+          if (word.endsWith('zo')) {
+            const core = word.slice(0, -2);
+            return reverseWord(core);
+          }
+          return word;
+        })
+        .join(' ');
+    }
+
+    function translateToZinklish() {
+      const input = document.getElementById('inputText').value;
+      document.getElementById('output').textContent = toZinklish(input);
+    }
+
+    function translateToEnglish() {
+      const input = document.getElementById('inputText').value;
+      document.getElementById('output').textContent = fromZinklish(input);
+    }
+  </script></body>
+</html>￼Enter
