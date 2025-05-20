@@ -1,0 +1,1 @@
+# Zinklish-translator
